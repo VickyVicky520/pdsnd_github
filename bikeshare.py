@@ -139,9 +139,13 @@ def trip_duration_stats(df):
     start_time = time.time()
 
     # TO DO: display total travel time
+    total_travel_time = df['Trip Duration'].sum()
+    print('Total travel time: {} seconds'.format(total_travel_time))
 
 
     # TO DO: display mean travel time
+    mean_travel_time = df['Trip Duration'].mean()
+    print('Mean travel time: {} seconds'.format(mean_travel_time))
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -155,13 +159,27 @@ def user_stats(df):
     start_time = time.time()
 
     # TO DO: Display counts of user types
-
+    user_types = df['User Type'].value_counts()
+    for i in range(len(user_types.index)):
+        print('The counts of {} is {}'.format(user_types.index[i], user_types.values[i]))
 
     # TO DO: Display counts of gender
-
+   if 'Gender' in df:
+        gender = df['Gender'].value_counts()
+        for i in range(len(gender.index)):
+            print('The counts of {} is {}'.format(gender.index[i], gender.values[i]))
+    else:
+        print('Gender information is missing in database.')
 
     # TO DO: Display earliest, most recent, and most common year of birth
-
+    if 'Birth Year' in df:
+        birth_year = df['Birth Year'].dropna().values
+        print('The earliest year of birth is {}.'.format(np.min(birth_year)))
+        print('The most recent year of birth is {}.'.format(np.max(birth_year)))
+        common_year = df['Birth Year'].dropna().value_counts().idxmax()
+        print('The most common year of birth is {}.'.format(common_year))
+    else:
+        print('The information is missing in the database.')
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
